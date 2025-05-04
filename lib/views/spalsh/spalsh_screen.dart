@@ -1,4 +1,6 @@
+import 'package:alahmad_book/views/home/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SpalshScreen extends StatefulWidget {
   const SpalshScreen({super.key});
@@ -9,11 +11,35 @@ class SpalshScreen extends StatefulWidget {
 
 class _SpalshScreenState extends State<SpalshScreen> {
   @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    Future.delayed(Duration(seconds: 4), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => MyHomePage(title: '')),
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: SystemUiOverlay.values,
+    );
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration( ),
+      body: Center(
+        child: Container(
+          width: 200,
+          child: Image.network(
+            'https://alahmad-pub.ir/wp-content/uploads/2025/03/Al-Ahmad-Pub-Logo-Site.png',
+          ),
+        ),
       ),
     );
   }
