@@ -15,6 +15,7 @@ class _SpalshScreenState extends State<SpalshScreen> {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(Duration(seconds: 4), () {
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => MyHomePage(title: '')),
       );
@@ -34,7 +35,7 @@ class _SpalshScreenState extends State<SpalshScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: 200,
           child: Image.network(
             'https://alahmad-pub.ir/wp-content/uploads/2025/03/Al-Ahmad-Pub-Logo-Site.png',

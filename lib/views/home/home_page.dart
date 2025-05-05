@@ -1,3 +1,4 @@
+import 'package:alahmad_book/views/book/mybook_screen.dart';
 import 'package:alahmad_book/views/infinite/infinity_screen.dart';
 import 'package:alahmad_book/views/profile/profile_screen.dart';
 import 'package:alahmad_book/views/search/search_screen.dart';
@@ -18,7 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
     StoreScreen(),
     InfinityScreen(),
     SearchScreen(),
-    Center(child: Text('جستجو')),
+    MyBooksScreen(),
     ProfileScreen()
   ];
 
