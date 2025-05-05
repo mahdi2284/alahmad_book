@@ -9,11 +9,35 @@ class BookDetailScreen extends StatefulWidget {
 }
 
 class _BookDetailScreenState extends State<BookDetailScreen> {
+  final ScrollController _scrollController = ScrollController();
+  bool _showAppBar = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.offset > 100 && !_showAppBar) {
+        setState(() {
+          _showAppBar = true;
+        });
+      } else if (_scrollController.offset <= 100 && _showAppBar) {
+        setState(() {
+          _showAppBar = false;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:
+          _showAppBar
+              ? AppBar(title: Text('book'), backgroundColor: Colors.teal)
+              : null,
       body: SafeArea(
         child: SingleChildScrollView(
+          controller: _scrollController,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -23,8 +47,8 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       boxShadow: [
-                        BoxShadow(blurRadius: 18,offset: Offset(10, 6)),
-                      ]
+                        BoxShadow(blurRadius: 18, offset: Offset(10, 6)),
+                      ],
                     ),
                     child: Image.asset(
                       'assets/images/sample_book.jpg',
@@ -142,49 +166,27 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 3, color: Colors.teal),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 10,
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.teal),
+                          borderRadius: BorderRadius.circular(50),
                         ),
-                        child: Text(
-                          'مطالعه نمونه',
-                          style: TextStyle(fontSize: 20, color: Colors.teal),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 3, color: Colors.deepOrange),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 10,
-                        ),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: Icon(
-                                Icons.store,
-                                color: Colors.deepOrange,
-                              ),
-                            ),
-                            Text(
-                              'خرید از بی نهایت',
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 10,
+                          ),
+                          child: Center(
+                            child: Text(
+                              'مطالعه نمونه',
                               style: TextStyle(
                                 fontSize: 20,
-                                color: Colors.deepOrange,
+                                color: Colors.teal,
                               ),
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
@@ -388,15 +390,18 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25,
+                  vertical: 20,
+                ),
                 child: Container(
                   width: double.infinity,
                   height: 200,
                   decoration: BoxDecoration(
                     boxShadow: [
-                      BoxShadow(blurRadius: 15,offset: Offset(4, 6),)
+                      BoxShadow(blurRadius: 15, offset: Offset(4, 6)),
                     ],
-                    color:  const Color.fromARGB(255, 212, 212, 212),
+                    color: const Color.fromARGB(255, 212, 212, 212),
                     borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(25),
                       topLeft: Radius.circular(25),
@@ -404,24 +409,23 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                   ),
                   child: Row(
                     children: [
-                      Image.asset('assets/images/avatar.png',scale: 10,),
+                      Image.asset('assets/images/avatar.png', scale: 10),
                       Column(
                         children: [
                           Text('هری پاتر'),
                           StarRating(
-                              rating: 3.5,
-                              filledIcon: Icons.star,
-                              halfFilledIcon: Icons.star_border,
-                              emptyIcon: Icons.star_border_outlined,
-                              color:
-                                  Colors
-                                      .black, // Color for filled and half-filled icons
-                              borderColor: Colors.grey, // Color for empty icons
-                            ),
+                            rating: 3.5,
+                            filledIcon: Icons.star,
+                            halfFilledIcon: Icons.star_border,
+                            emptyIcon: Icons.star_border_outlined,
+                            color:
+                                Colors
+                                    .black, // Color for filled and half-filled icons
+                            borderColor: Colors.grey, // Color for empty icons
+                          ),
                         ],
-                      )
+                      ),
                     ],
-
                   ),
                 ),
               ),
