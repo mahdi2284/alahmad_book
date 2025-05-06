@@ -399,21 +399,15 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 25,
-                      vertical: 20,
-                    ),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          SizedBox(width: 300, child: CommentCard()),
-                          SizedBox(width: 300, child: CommentCard()),
-                          SizedBox(width: 300, child: CommentCard()),
-                          SizedBox(width: 300, child: CommentCard())
-                        ],
-                      ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 300, child: CommentCard()),
+                        SizedBox(width: 300, child: CommentCard()),
+                        SizedBox(width: 300, child: CommentCard()),
+                        SizedBox(width: 300, child: CommentCard())
+                      ],
                     ),
                   ),
                 ],
@@ -471,88 +465,91 @@ class CommentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 2,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/avatar.png'),
-                  radius: 30,
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('هری پاتر'),
-                      Row(
-                        children: [
-                          RatingBar.builder(
-                            itemSize: 20,
-                            initialRating: 5,
-                            direction: Axis.horizontal,
-                            minRating: 1,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemBuilder:
-                                (context, index) =>
-                                    Icon(Icons.star, color: Colors.black),
-                            onRatingUpdate: (value) {},
-                          ),
-                          SizedBox(width: 10),
-                          Text('1400/01/20'),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.check_circle, color: Colors.teal),
-                          SizedBox(width: 10),
-                          Text(
-                            'توصیه می کنم',
-                            style: TextStyle(color: Colors.teal),
-                          ),
-                        ],
-                      ),
-                    ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 10,right: 10),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        elevation: 2,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage('assets/images/avatar.png'),
+                    radius: 30,
                   ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('هری پاتر'),
+                        Row(
+                          children: [
+                            RatingBar.builder(
+                              itemSize: 20,
+                              initialRating: 5,
+                              direction: Axis.horizontal,
+                              minRating: 1,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemBuilder:
+                                  (context, index) =>
+                                      Icon(Icons.star, color: Colors.black),
+                              onRatingUpdate: (value) {},
+                            ),
+                            SizedBox(width: 10),
+                            Text('1400/01/20'),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.check_circle, color: Colors.teal),
+                            SizedBox(width: 10),
+                            Text(
+                              'توصیه می کنم',
+                              style: TextStyle(color: Colors.teal),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.only(left: 25.0, right: 20, bottom: 10),
+              child: Text(
+                'سلام می خوام با شما در مورد این کتاب صحبت کنم ، لطفا برای دقایقی با من همراه شوید ....',
+              ),
+            ),
+            Row(
+              children: [
+                TextButton.icon(
+                  style: ButtonStyle(
+                    iconColor: WidgetStatePropertyAll(Colors.grey),
+                  ),
+                  onPressed: () {},
+                  icon: Icon(Icons.thumb_up),
+                  label: Text('مفید بود', style: TextStyle(color: Colors.grey)),
+                ),
+                TextButton.icon(
+                  style: ButtonStyle(
+                    iconColor: WidgetStatePropertyAll(Colors.grey),
+                  ),
+                  onPressed: () {},
+                  icon: Icon(Icons.thumb_down),
+                  label: Text('مفید نبود', style: TextStyle(color: Colors.grey)),
                 ),
               ],
             ),
-          ),
-          SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.only(left: 25.0, right: 20, bottom: 10),
-            child: Text(
-              'سلام می خوام با شما در مورد این کتاب صحبت کنم ، لطفا برای دقایقی با من همراه شوید ....',
-            ),
-          ),
-          Row(
-            children: [
-              TextButton.icon(
-                style: ButtonStyle(
-                  iconColor: WidgetStatePropertyAll(Colors.grey),
-                ),
-                onPressed: () {},
-                icon: Icon(Icons.thumb_up),
-                label: Text('مفید بود', style: TextStyle(color: Colors.grey)),
-              ),
-              TextButton.icon(
-                style: ButtonStyle(
-                  iconColor: WidgetStatePropertyAll(Colors.grey),
-                ),
-                onPressed: () {},
-                icon: Icon(Icons.thumb_down),
-                label: Text('مفید نبود', style: TextStyle(color: Colors.grey)),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
