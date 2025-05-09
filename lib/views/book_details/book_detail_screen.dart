@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:alahmad_book/data/models/book_model.dart';
+
 
 class BookDetailScreen extends StatefulWidget {
-  const BookDetailScreen({super.key});
+  
 
+  final Book book;
+
+  const BookDetailScreen({super.key, required this.book});
   @override
   State<BookDetailScreen> createState() => _BookDetailScreenState();
 }
@@ -406,8 +411,121 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                         SizedBox(width: 300, child: CommentCard()),
                         SizedBox(width: 300, child: CommentCard()),
                         SizedBox(width: 300, child: CommentCard()),
-                        SizedBox(width: 300, child: CommentCard())
+                        SizedBox(width: 300, child: CommentCard()),
                       ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                      vertical: 10,
+                    ),
+                    child: Divider(thickness: 1),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                      vertical: 10,
+                    ),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        'بریده هایی از کتاب',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 300, child: ClippingBook()),
+                        SizedBox(width: 300, child: ClippingBook()),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                      vertical: 10,
+                    ),
+                    child: Divider(thickness: 1),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 25,
+                      vertical: 10,
+                    ),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        'نوشتن نظر',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 400,
+                    child: SizedBox(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          elevation: 2,
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                          child: Container(
+                            height: 200,
+                            width: double.infinity,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  RatingBar.builder(
+                                    itemSize: 20,
+                                    initialRating: 5,
+                                    direction: Axis.horizontal,
+                                    minRating: 1,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemBuilder:
+                                        (context, index) => Icon(
+                                          Icons.star,
+                                          color: Colors.teal,
+                                        ),
+                                    onRatingUpdate: (value) {},
+                                  ),
+                                  SizedBox(height: 10,),
+                                  ElevatedButton(
+                                    onPressed: () {},
+                                    child: Text('نوشتن نظر'),
+                                    style: ButtonStyle(
+                                      side: WidgetStatePropertyAll(BorderSide(color: Colors.teal)),
+                                      elevation: WidgetStatePropertyAll(0),
+                                      foregroundColor: WidgetStatePropertyAll(Colors.teal)
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -460,95 +578,187 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
   }
 }
 
+class ClippingBook extends StatelessWidget {
+  const ClippingBook({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    final cardWidth = screenWidth * 0.9;
+    final cardHeight = screenHeight * 0.3;
+
+    return SizedBox(
+      width: cardWidth,
+      height: cardHeight,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            // کارت با متن وسط
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              elevation: 2,
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Container(
+                height: 500, // ارتفاع مشخص برای قرار گرفتن در مرکز
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'هر کتاب شانس امتحان کردن یکی از زندگی‌هایی رو بهت می‌ده که می‌تونستی تجربه‌شون کنی',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'رادیو سکوت (:',
+                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            // دکمه دایره‌ای پایین
+            Positioned(
+              bottom: 0,
+              child: ClipOval(
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  color: Colors.orange,
+                  child: Center(
+                    child: Text(
+                      'ر',
+                      style: TextStyle(fontSize: 32, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class CommentCard extends StatelessWidget {
   const CommentCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10,right: 10),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 2,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
+    final screenWidth = MediaQuery.of(context).size.width;
+    final cardWidth = screenWidth * 0.9; // کارت ۹۰٪ عرض صفحه
+
+    return SizedBox(
+      width: cardWidth,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          elevation: 2,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: AssetImage('assets/images/avatar.png'),
+                      radius: 30,
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('هری پاتر'),
+                          Row(
+                            children: [
+                              RatingBar.builder(
+                                itemSize: 20,
+                                initialRating: 5,
+                                direction: Axis.horizontal,
+                                minRating: 1,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemBuilder:
+                                    (context, index) =>
+                                        Icon(Icons.star, color: Colors.black),
+                                onRatingUpdate: (value) {},
+                              ),
+                              SizedBox(width: 10),
+                              Text('1400/01/20'),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.check_circle, color: Colors.teal),
+                              SizedBox(width: 10),
+                              Text(
+                                'توصیه می کنم',
+                                style: TextStyle(color: Colors.teal),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 25.0,
+                  right: 20,
+                  bottom: 10,
+                ),
+                child: Text(
+                  'سلام می خوام با شما در مورد این کتاب صحبت کنم ، لطفا برای دقایقی با من همراه شوید ....',
+                ),
+              ),
+              Row(
                 children: [
-                  CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/avatar.png'),
-                    radius: 30,
+                  TextButton.icon(
+                    style: ButtonStyle(
+                      iconColor: WidgetStatePropertyAll(Colors.grey),
+                    ),
+                    onPressed: () {},
+                    icon: Icon(Icons.thumb_up),
+                    label: Text(
+                      'مفید بود',
+                      style: TextStyle(color: Colors.grey),
+                    ),
                   ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('هری پاتر'),
-                        Row(
-                          children: [
-                            RatingBar.builder(
-                              itemSize: 20,
-                              initialRating: 5,
-                              direction: Axis.horizontal,
-                              minRating: 1,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemBuilder:
-                                  (context, index) =>
-                                      Icon(Icons.star, color: Colors.black),
-                              onRatingUpdate: (value) {},
-                            ),
-                            SizedBox(width: 10),
-                            Text('1400/01/20'),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(Icons.check_circle, color: Colors.teal),
-                            SizedBox(width: 10),
-                            Text(
-                              'توصیه می کنم',
-                              style: TextStyle(color: Colors.teal),
-                            ),
-                          ],
-                        ),
-                      ],
+                  TextButton.icon(
+                    style: ButtonStyle(
+                      iconColor: WidgetStatePropertyAll(Colors.grey),
+                    ),
+                    onPressed: () {},
+                    icon: Icon(Icons.thumb_down),
+                    label: Text(
+                      'مفید نبود',
+                      style: TextStyle(color: Colors.grey),
                     ),
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.only(left: 25.0, right: 20, bottom: 10),
-              child: Text(
-                'سلام می خوام با شما در مورد این کتاب صحبت کنم ، لطفا برای دقایقی با من همراه شوید ....',
-              ),
-            ),
-            Row(
-              children: [
-                TextButton.icon(
-                  style: ButtonStyle(
-                    iconColor: WidgetStatePropertyAll(Colors.grey),
-                  ),
-                  onPressed: () {},
-                  icon: Icon(Icons.thumb_up),
-                  label: Text('مفید بود', style: TextStyle(color: Colors.grey)),
-                ),
-                TextButton.icon(
-                  style: ButtonStyle(
-                    iconColor: WidgetStatePropertyAll(Colors.grey),
-                  ),
-                  onPressed: () {},
-                  icon: Icon(Icons.thumb_down),
-                  label: Text('مفید نبود', style: TextStyle(color: Colors.grey)),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1,30 +1,36 @@
+import 'dart:convert';
+
 import 'package:alahmad_book/data/models/book_model.dart';
 import 'package:alahmad_book/views/book_details/book_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class StoreScreen extends StatelessWidget {
-  final List<Book> sampleBooks = [
-    Book(
-      id: '1',
-      title: 'کتابخانه نیمه‌شب',
-      author: 'مت هیگ',
-      coverUrl: 'assets/images/sample_book.jpg',
-      description: 'داستانی درباره انتخاب‌های زندگی...',
-      price: 32000,
-      rating: 4.6, // 👈 اضافه شده
-    ),
-    Book(
-      id: '2',
-      title: 'اثر مرکب',
-      author: 'دارن هاردی',
-      coverUrl: 'assets/images/sample_book.jpg',
-      description: 'مسیر موفقیت از طریق کارهای کوچک...',
-      price: 28000,
-      rating: 4.2,
-    ),
-  ];
+class StoreScreen extends StatefulWidget {
 
   StoreScreen({super.key});
+
+  @override
+  State<StoreScreen> createState() => _StoreScreenState();
+}
+
+class _StoreScreenState extends State<StoreScreen> {
+  List<Book> books = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadBooks();
+  }
+
+
+  Future<void> loadBooks() async {
+    final String response = await rootBundle.loadString('assets/data/books.json');
+    final List data = jsonDecode(response);
+    setState(() {
+      books = data.map((e) => Book.fromJson(e)).toList();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,9 +95,9 @@ class StoreScreen extends StatelessWidget {
             height: 240,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: sampleBooks.length,
+              itemCount: books.length,
               itemBuilder:
-                  (context, index) => _BookCard(book: sampleBooks[index]),
+                  (context, index) => _BookCard(book: books[index]),
             ),
           ),
           Padding(
@@ -111,9 +117,9 @@ class StoreScreen extends StatelessWidget {
             height: 240,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: sampleBooks.length,
+              itemCount: books.length,
               itemBuilder:
-                  (context, index) => _BookCard(book: sampleBooks[index]),
+                  (context, index) => _BookCard(book: books[index]),
             ),
           ),
           Padding(
@@ -133,9 +139,9 @@ class StoreScreen extends StatelessWidget {
             height: 240,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: sampleBooks.length,
+              itemCount: books.length,
               itemBuilder: (context, index) {
-                return _BookCard(book: sampleBooks[index]);
+                return _BookCard(book: books[index]);
               },
             ),
           ),
@@ -177,9 +183,7 @@ class _BookCard extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (_) => BookDetailScreen(),
-          ),
+          MaterialPageRoute(builder: (_) => BookDetailScreen(book: book)),
         );
       },
       child: Container(
