@@ -1,19 +1,19 @@
 [
     {
       "id": "1",
-      "title": "کتابخانه نیمه‌شب",
-      "author": "مت هیگ",
-      "coverUrl": "assets/images/sample_book.jpg",
-      "description": "داستانی درباره انتخاب‌های زندگی...",
+      "title": "لطایفی در سلوک",
+      "author": "شیخ اشراق",
+      "coverUrl": "assets/images/latayef.png",
+      "description": "شرح رساله لغت موران",
       "price": 32000,
       "rating": 4.6
     },
     {
       "id": "2",
-      "title": "اثر مرکب",
-      "author": "دارن هاردی",
-      "coverUrl": "assets/images/sample_book.jpg",
-      "description": "مسیر موفقیت از طریق کارهای کوچک...",
+      "title": "اربعین ظهور",
+      "author": "سید یدالله یزدان پناه",
+      "coverUrl": "assets/images/arbaein.png",
+      "description": "آثار آیت­‌الله سیدالله یزدان­‌پناه در موضوع اربعین است",
       "price": 28000,
       "rating": 4.2
     },

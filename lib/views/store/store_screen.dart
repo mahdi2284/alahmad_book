@@ -91,13 +91,16 @@ class _StoreScreenState extends State<StoreScreen> {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
-          SizedBox(
-            height: 240,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: books.length,
-              itemBuilder:
-                  (context, index) => _BookCard(book: books[index]),
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: SizedBox(
+              height: 240,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: books.length,
+                itemBuilder:
+                    (context, index) => _BookCard(book: books[index]),
+              ),
             ),
           ),
           Padding(
@@ -187,49 +190,13 @@ class _BookCard extends StatelessWidget {
         );
       },
       child: Container(
-        width: 140,
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
           boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(book.coverUrl),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(6),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    book.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    book.author,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+        child: Image.asset(book.coverUrl,fit: BoxFit.contain,),
       ),
     );
   }
