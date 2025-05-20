@@ -7,8 +7,8 @@ import 'package:alahmad_book/data/models/book_model.dart';
 class BookDetailScreen extends StatefulWidget {
   
 
-  final Book book;
 
+  final Book book;
   const BookDetailScreen({super.key, required this.book});
   @override
   State<BookDetailScreen> createState() => _BookDetailScreenState();
@@ -17,6 +17,7 @@ class BookDetailScreen extends StatefulWidget {
 class _BookDetailScreenState extends State<BookDetailScreen> {
   final ScrollController _scrollController = ScrollController();
   bool _showAppBar = false;
+  
 
   @override
   void initState() {
@@ -62,14 +63,14 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                           ],
                         ),
                         child: Image.asset(
-                          'assets/images/sample_book.jpg',
+                          widget.book.coverUrl,
                           height: 270,
                         ),
                       ),
                     ),
                   ),
                   Text(
-                    'تاملاتی در فلسفه فلسفه اسلامی',
+                    widget.book.title,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
                   ),
                   Padding(
@@ -81,7 +82,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'علامه طباطبایی',
+                          widget.book.author,
                           style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                         Icon(Icons.arrow_right),
@@ -139,7 +140,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                             Column(
                               children: [
                                 StarRating(
-                                  rating: 3.5,
+                                  rating: widget.book.rating,
                                   filledIcon: Icons.star,
                                   halfFilledIcon: Icons.star_border,
                                   emptyIcon: Icons.star_border_outlined,
